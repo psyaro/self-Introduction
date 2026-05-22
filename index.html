@@ -24,6 +24,7 @@ body{
     var(--bg);
   color:var(--ink);
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   padding:32px;
@@ -104,6 +105,135 @@ nav{display:flex;flex-direction:column;gap:2px;}
 }
 .link:hover .handle,.link:focus-visible .handle{color:var(--accent);transform:translateX(-4px);}
 .link:focus-visible{outline:none;}
+
+/* Heisei Access Counter Styles */
+.counter-box{
+  margin-top: 32px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed var(--line);
+  border-radius: 4px;
+  text-align: center;
+  animation:rise .12s .08s cubic-bezier(.16, 1, 0.3, 1) both;
+}
+.counter-title{
+  font-size: 11px;
+  color: var(--dim);
+  margin-bottom: 12px;
+  letter-spacing: 0.1em;
+  font-family: "MS Gothic", "Courier New", monospace;
+}
+.counter-title .blink{
+  animation: heisei-blink 1s steps(2, start) infinite;
+}
+@keyframes heisei-blink {
+  to { visibility: hidden; }
+}
+.counter-digits-container{
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  background: #050709;
+  padding: 4px 6px;
+  border-top: 2px solid #26282f;
+  border-left: 2px solid #26282f;
+  border-bottom: 2px solid #8b8a85;
+  border-right: 2px solid #8b8a85;
+  border-radius: 2px;
+}
+.counter-digit{
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  font-weight: bold;
+  color: #39ff14; /* Cyber Neon Green */
+  text-shadow: 0 0 5px rgba(57, 255, 20, 0.7);
+  background: #0d1a0d;
+  width: 14px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #1a331a;
+  user-select: none;
+}
+.counter-digit:last-child{
+  border-right: none;
+}
+.kiriban-alert-container {
+  display: none;
+  margin-top: 14px;
+  perspective: 400px;
+}
+.kiriban-alert{
+  background: linear-gradient(90deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
+  background-size: 300% 300%;
+  animation: rainbow-bg 2s ease infinite, heisei-blink 0.4s steps(2, start) infinite;
+  color: #fff;
+  font-family: "MS Gothic", "Courier New", monospace;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #808080;
+  border-right: 2px solid #808080;
+  text-shadow: 1px 1px 0px #000;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+@keyframes rainbow-bg {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* Retro Badges */
+.retro-badges-container{
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+  animation:rise .12s .09s cubic-bezier(.16, 1, 0.3, 1) both;
+}
+.retro-badge{
+  width: 88px;
+  height: 31px;
+  font-family: "MS Gothic", "Courier New", monospace;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.1;
+  font-weight: bold;
+  user-select: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.retro-badge.html5{
+  background: #1c150c;
+  border-top: 2px solid #d4b483;
+  border-left: 2px solid #d4b483;
+  border-bottom: 2px solid #4a3c28;
+  border-right: 2px solid #4a3c28;
+  color: #d4b483;
+}
+.retro-badge.ie6{
+  background: #0f1c30;
+  border-top: 2px solid #00c6ff;
+  border-left: 2px solid #00c6ff;
+  border-bottom: 2px solid #003666;
+  border-right: 2px solid #003666;
+  color: #00c6ff;
+}
+.retro-badge.netscape{
+  background: #0f1c14;
+  border-top: 2px solid #39ff14;
+  border-left: 2px solid #39ff14;
+  border-bottom: 2px solid #0e3d06;
+  border-right: 2px solid #0e3d06;
+  color: #39ff14;
+}
+
 @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
@@ -127,6 +257,108 @@ nav{display:flex;flex-direction:column;gap:2px;}
       <span class="name">読書メーター</span><span class="handle">bookmeter</span>
     </a>
   </nav>
+
+  <!-- Access Counter Box -->
+  <div class="counter-box">
+    <div class="counter-title">
+      ★ キリ番歓迎 ★
+    </div>
+    <div class="counter-digits-container" id="counter-digits">
+      <span class="counter-digit">-</span>
+      <span class="counter-digit">-</span>
+      <span class="counter-digit">-</span>
+      <span class="counter-digit">-</span>
+      <span class="counter-digit">-</span>
+      <span class="counter-digit">-</span>
+    </div>
+    <div class="kiriban-alert-container" id="kiriban-area"></div>
+  </div>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const counterDigits = document.getElementById('counter-digits');
+  const kiribanArea = document.getElementById('kiriban-area');
+
+  // Condition 1: Only count visits on the production host (psyaro.github.io)
+  const isProduction = window.location.hostname === 'psyaro.github.io';
+
+  // Condition 2: Prevent incrementing on duplicate visits from the same device within 24 hours
+  const lastVisit = localStorage.getItem('muno_last_visit');
+  const now = Date.now();
+  const ONE_DAY = 24 * 60 * 60 * 1000; // 24 hours in ms
+  const isUnique = !lastVisit || (now - parseInt(lastVisit, 10) > ONE_DAY);
+
+  // Set endpoint: use /up to increment on production for unique visits, otherwise read-only GET
+  let apiEndpoint = 'https://api.counterapi.dev/v1/muno-portfolio-v3/visits';
+  
+  if (isProduction && isUnique) {
+    apiEndpoint += '/up';
+    localStorage.setItem('muno_last_visit', String(now));
+  }
+
+  // Asynchronous fetch from CounterAPI
+  fetch(apiEndpoint)
+    .then(res => {
+      // Handle the case where the counter is not initialized yet (returns 400)
+      if (res.status === 400) {
+        return { count: 0 };
+      }
+      if (!res.ok) throw new Error('API error');
+      return res.json();
+    })
+    .then(data => {
+      if (data && typeof data.count === 'number') {
+        const count = data.count;
+        const formatted = String(count).padStart(6, '0');
+        
+        // Render cyber neon digits
+        counterDigits.innerHTML = '';
+        for (let char of formatted) {
+          const span = document.createElement('span');
+          span.className = 'counter-digit';
+          span.textContent = char;
+          counterDigits.appendChild(span);
+        }
+
+        // Kiri-ban detection
+        if (isKiriban(count)) {
+          showKiriban(count);
+        }
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      // Graceful offline fallback (displays a beautiful mock number)
+      const fallback = "000777";
+      counterDigits.innerHTML = '';
+      for (let char of fallback) {
+        const span = document.createElement('span');
+        span.className = 'counter-digit';
+        span.textContent = char;
+        counterDigits.appendChild(span);
+      }
+    });
+
+  function isKiriban(count) {
+    if (count <= 0) return false;
+    // Multiples of 100
+    if (count % 100 === 0) return true;
+    const str = String(count);
+    // Triple/identical digits (111, 222, 777)
+    if (str.length >= 3 && new Set(str).size === 1) return true;
+    // Consecutive sequence
+    if (str === '1234' || str === '12345' || str === '7777') return true;
+    return false;
+  }
+
+  function showKiriban(count) {
+    if (kiribanArea) {
+      kiribanArea.innerHTML = '<div class="kiriban-alert">🎉 祝！キリ番 ' + count + ' ゲット！おめでとう！ 🎉</div>';
+      kiribanArea.style.display = 'block';
+    }
+  }
+});
+</script>
 </body>
 </html>
