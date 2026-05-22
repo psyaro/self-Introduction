@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>プロフィール</title>
+<title>プロフィール | muno</title>
+<meta name="description" content="munoの自己紹介ポートフォリオページです。元Software Engineerとしての活動やソーシャルリンクをご覧いただけます。">
 <style>
 :root{
   --bg:#0e0f13;
@@ -32,7 +33,7 @@ body{
 .card{
   width:100%;
   max-width:520px;
-  animation:rise .7s cubic-bezier(.2,.8,.2,1) both;
+  animation:rise .12s cubic-bezier(.16, 1, 0.3, 1) both;
 }
 .eyebrow{
   font-family:system-ui,sans-serif;
@@ -42,7 +43,7 @@ body{
   color:var(--accent);
   margin-bottom:14px;
   padding-left:2px;
-  animation:rise .7s .05s cubic-bezier(.2,.8,.2,1) both;
+  animation:rise .12s .01s cubic-bezier(.16, 1, 0.3, 1) both;
 }
 h1{
   font-size:clamp(34px,8vw,52px);
@@ -50,7 +51,7 @@ h1{
   letter-spacing:.02em;
   line-height:1.15;
   margin-bottom:18px;
-  animation:rise .7s .1s cubic-bezier(.2,.8,.2,1) both;
+  animation:rise .12s .02s cubic-bezier(.16, 1, 0.3, 1) both;
 }
 h1 .accent{color:var(--accent);}
 .bio{
@@ -60,7 +61,7 @@ h1 .accent{color:var(--accent);}
   margin-bottom:36px;
   padding-bottom:28px;
   border-bottom:1px solid var(--line);
-  animation:rise .7s .15s cubic-bezier(.2,.8,.2,1) both;
+  animation:rise .12s .03s cubic-bezier(.16, 1, 0.3, 1) both;
 }
 nav{display:flex;flex-direction:column;gap:2px;}
 .link{
@@ -75,11 +76,12 @@ nav{display:flex;flex-direction:column;gap:2px;}
   font-size:19px;
   letter-spacing:.04em;
   overflow:hidden;
-  animation:rise .7s cubic-bezier(.2,.8,.2,1) both;
+  animation:rise .12s cubic-bezier(.16, 1, 0.3, 1) both;
 }
-.link:nth-child(1){animation-delay:.22s;}
-.link:nth-child(2){animation-delay:.30s;}
-.link:nth-child(3){animation-delay:.38s;}
+.link:nth-child(1){animation-delay:.04s;}
+.link:nth-child(2){animation-delay:.05s;}
+.link:nth-child(3){animation-delay:.06s;}
+.link:nth-child(4){animation-delay:.07s;}
 .link::before{
   content:"";
   position:absolute;
@@ -102,7 +104,7 @@ nav{display:flex;flex-direction:column;gap:2px;}
 }
 .link:hover .handle,.link:focus-visible .handle{color:var(--accent);transform:translateX(-4px);}
 .link:focus-visible{outline:none;}
-@keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
@@ -110,15 +112,18 @@ nav{display:flex;flex-direction:column;gap:2px;}
 <main class="card">
   <div class="eyebrow">Profile</div>
   <h1><span class="accent">muno</span></h1>
-  <p class="bio"></p>
+  <p class="bio">元Software Engineer</p>
   <nav>
-    <a class="link" href="https://x.com/__23rdsf">
+    <a class="link" href="https://github.com/psyaro" id="link-github">
+      <span class="name">GitHub</span><span class="handle">@psyaro</span>
+    </a>
+    <a class="link" href="https://x.com/__23rdsf" id="link-x">
       <span class="name">X</span><span class="handle">@__23rdsf</span>
     </a>
-    <a class="link" href="https://note.com/mno444">
+    <a class="link" href="https://note.com/mno444" id="link-note">
       <span class="name">note</span><span class="handle">mno444</span>
     </a>
-    <a class="link" href="https://bookmeter.com/users/1021053">
+    <a class="link" href="https://bookmeter.com/users/1021053" id="link-bookmeter">
       <span class="name">読書メーター</span><span class="handle">bookmeter</span>
     </a>
   </nav>
