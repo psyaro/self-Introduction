@@ -261,7 +261,7 @@ nav{display:flex;flex-direction:column;gap:2px;}
   <!-- Access Counter Box -->
   <div class="counter-box">
     <div class="counter-title">
-      ★ キリ番歓迎 ★
+      ★ キリ番歓迎 ★・・・・調整中
     </div>
     <div class="counter-digits-container" id="counter-digits">
       <span class="counter-digit">-</span>
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const isUnique = !lastVisit || (now - parseInt(lastVisit, 10) > ONE_DAY);
 
   // Set endpoint: use /up to increment on production for unique visits, otherwise read-only GET
-  let apiEndpoint = 'https://api.counterapi.dev/v1/muno-portfolio-v3/visits';
+  let apiEndpoint = 'https://api.counterapi.dev/v2/psyaros-team-4205/first-counter-4205';
   
   if (isProduction && isUnique) {
     apiEndpoint += '/up';
@@ -300,10 +300,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Asynchronous fetch from CounterAPI
   fetch(apiEndpoint)
     .then(res => {
-      // Handle the case where the counter is not initialized yet (returns 400)
-      if (res.status === 400) {
-        return { count: 0 };
-      }
       if (!res.ok) throw new Error('API error');
       return res.json();
     })
@@ -328,16 +324,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     })
     .catch(err => {
-      console.error(err);
-      // Graceful offline fallback (displays a beautiful mock number)
-      const fallback = "000777";
-      counterDigits.innerHTML = '';
-      for (let char of fallback) {
-        const span = document.createElement('span');
-        span.className = 'counter-digit';
-        span.textContent = char;
-        counterDigits.appendChild(span);
-      }
+      console.error('Counter fetch error:', err);
+      // On error (e.g. network offline), keep the default dashes from HTML
     });
 
   function isKiriban(count) {
