@@ -244,9 +244,6 @@ nav{display:flex;flex-direction:column;gap:2px;}
   <h1><span class="accent">muno</span></h1>
   <p class="bio">元Software Engineer</p>
   <nav>
-    <a class="link" href="https://github.com/psyaro" id="link-github">
-      <span class="name">GitHub</span><span class="handle">@psyaro</span>
-    </a>
     <a class="link" href="https://x.com/__23rdsf" id="link-x">
       <span class="name">X</span><span class="handle">@__23rdsf</span>
     </a>
@@ -256,12 +253,15 @@ nav{display:flex;flex-direction:column;gap:2px;}
     <a class="link" href="https://bookmeter.com/users/1021053" id="link-bookmeter">
       <span class="name">読書メーター</span><span class="handle">bookmeter</span>
     </a>
+    <a class="link" href="https://github.com/psyaro" id="link-github">
+      <span class="name">GitHub</span><span class="handle">@psyaro</span>
+    </a>    
   </nav>
 
   <!-- Access Counter Box -->
-  <div class="counter-box">
+  <!-- <div class="counter-box">
     <div class="counter-title">
-      ★ キリ番歓迎 ★・・・・調整中
+      ★ キリ番歓迎 ★
     </div>
     <div class="counter-digits-container" id="counter-digits">
       <span class="counter-digit">-</span>
@@ -272,7 +272,7 @@ nav{display:flex;flex-direction:column;gap:2px;}
       <span class="counter-digit">-</span>
     </div>
     <div class="kiriban-alert-container" id="kiriban-area"></div>
-  </div>
+  </div> -->
 </main>
 
 <script>
@@ -280,8 +280,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const counterDigits = document.getElementById('counter-digits');
   const kiribanArea = document.getElementById('kiriban-area');
 
+  // Helper function to render digits
+  function updateCounterDisplay(count) {
+    const formatted = String(count).padStart(6, '0');
+    counterDigits.innerHTML = '';
+    for (let char of formatted) {
+      const span = document.createElement('span');
+      span.className = 'counter-digit';
+      span.textContent = char;
+      counterDigits.appendChild(span);
+    }
+    // Kiri-ban detection
+    if (isKiriban(count)) {
+      showKiriban(count);
+    } else if (kiribanArea) {
+      kiribanArea.style.display = 'none';
+    }
+  }
+
   // Condition 1: Only count visits on the production host (psyaro.github.io)
   const isProduction = window.location.hostname === 'psyaro.github.io';
+
+  // If local environment, do not call API to avoid ERR_BLOCKED_BY_CLIENT (Adblockers)
+  // and directly render a mock count so the developer can see it working.
+  if (!isProduction) {
+    const mockCount = 123; // Test value for local preview
+    updateCounterDisplay(mockCount);
+    return;
+  }
 
   // Condition 2: Prevent incrementing on duplicate visits from the same device within 24 hours
   const lastVisit = localStorage.getItem('muno_last_visit');
@@ -292,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set endpoint: use /up to increment on production for unique visits, otherwise read-only GET
   let apiEndpoint = 'https://api.counterapi.dev/v2/psyaros-team-4205/first-counter-4205';
   
-  if (isProduction && isUnique) {
+  if (isUnique) {
     apiEndpoint += '/up';
     localStorage.setItem('muno_last_visit', String(now));
   }
@@ -305,27 +331,13 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(data => {
       if (data && typeof data.count === 'number') {
-        const count = data.count;
-        const formatted = String(count).padStart(6, '0');
-        
-        // Render cyber neon digits
-        counterDigits.innerHTML = '';
-        for (let char of formatted) {
-          const span = document.createElement('span');
-          span.className = 'counter-digit';
-          span.textContent = char;
-          counterDigits.appendChild(span);
-        }
-
-        // Kiri-ban detection
-        if (isKiriban(count)) {
-          showKiriban(count);
-        }
+        updateCounterDisplay(data.count);
       }
     })
     .catch(err => {
       console.error('Counter fetch error:', err);
-      // On error (e.g. network offline), keep the default dashes from HTML
+      // Fallback: if adblocker blocks the API on production, show 000000 instead of keeping dashes
+      updateCounterDisplay(0);
     });
 
   function isKiriban(count) {
