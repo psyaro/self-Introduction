@@ -159,34 +159,6 @@ nav{display:flex;flex-direction:column;gap:2px;}
 .counter-digit:last-child{
   border-right: none;
 }
-.kiriban-alert-container {
-  display: none;
-  margin-top: 14px;
-  perspective: 400px;
-}
-.kiriban-alert{
-  background: linear-gradient(90deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
-  background-size: 300% 300%;
-  animation: rainbow-bg 2s ease infinite, heisei-blink 0.4s steps(2, start) infinite;
-  color: #fff;
-  font-family: "MS Gothic", "Courier New", monospace;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 6px 12px;
-  border-top: 2px solid #fff;
-  border-left: 2px solid #fff;
-  border-bottom: 2px solid #808080;
-  border-right: 2px solid #808080;
-  text-shadow: 1px 1px 0px #000;
-  display: inline-block;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-@keyframes rainbow-bg {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
 /* Retro Badges */
 .retro-badges-container{
   display: flex;
@@ -258,27 +230,11 @@ nav{display:flex;flex-direction:column;gap:2px;}
     </a>    
   </nav>
 
-  <!-- Access Counter Box -->
-  <!-- <div class="counter-box">
-    <div class="counter-title">
-      ★ キリ番歓迎 ★
-    </div>
-    <div class="counter-digits-container" id="counter-digits">
-      <span class="counter-digit">-</span>
-      <span class="counter-digit">-</span>
-      <span class="counter-digit">-</span>
-      <span class="counter-digit">-</span>
-      <span class="counter-digit">-</span>
-      <span class="counter-digit">-</span>
-    </div>
-    <div class="kiriban-alert-container" id="kiriban-area"></div>
-  </div> -->
 </main>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const counterDigits = document.getElementById('counter-digits');
-  const kiribanArea = document.getElementById('kiriban-area');
 
   // Helper function to render digits
   function updateCounterDisplay(count) {
@@ -289,12 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
       span.className = 'counter-digit';
       span.textContent = char;
       counterDigits.appendChild(span);
-    }
-    // Kiri-ban detection
-    if (isKiriban(count)) {
-      showKiriban(count);
-    } else if (kiribanArea) {
-      kiribanArea.style.display = 'none';
     }
   }
 
@@ -340,24 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
       updateCounterDisplay(0);
     });
 
-  function isKiriban(count) {
-    if (count <= 0) return false;
-    // Multiples of 100
-    if (count % 100 === 0) return true;
-    const str = String(count);
-    // Triple/identical digits (111, 222, 777)
-    if (str.length >= 3 && new Set(str).size === 1) return true;
-    // Consecutive sequence
-    if (str === '1234' || str === '12345' || str === '7777') return true;
-    return false;
-  }
-
-  function showKiriban(count) {
-    if (kiribanArea) {
-      kiribanArea.innerHTML = '<div class="kiriban-alert">🎉 祝！キリ番 ' + count + ' ゲット！おめでとう！ 🎉</div>';
-      kiribanArea.style.display = 'block';
-    }
-  }
 });
 </script>
 </body>
