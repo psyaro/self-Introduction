@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>プロフィール | muno</title>
 <meta name="description" content="munoの自己紹介ポートフォリオページです。元Software Engineerとしての活動やソーシャルリンクをご覧いただけます。">
+<meta property="og:title" content="プロフィール | muno">
+<meta property="og:description" content="munoの自己紹介ポートフォリオページです。元Software Engineerとしての活動やソーシャルリンクをご覧いただけます。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nomineko.com/">
+<meta name="twitter:card" content="summary">
 <style>
 :root{
   --bg:#0e0f13;
@@ -84,6 +89,7 @@ nav{display:flex;flex-direction:column;gap:2px;}
 .link:nth-child(3){animation-delay:.06s;}
 .link:nth-child(4){animation-delay:.07s;}
 .link:nth-child(5){animation-delay:.08s;}
+.link:nth-child(6){animation-delay:.09s;}
 .link::before{
   content:"";
   position:absolute;
@@ -106,106 +112,6 @@ nav{display:flex;flex-direction:column;gap:2px;}
 }
 .link:hover .handle,.link:focus-visible .handle{color:var(--accent);transform:translateX(-4px);}
 .link:focus-visible{outline:none;}
-
-/* Heisei Access Counter Styles */
-.counter-box{
-  margin-top: 32px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px dashed var(--line);
-  border-radius: 4px;
-  text-align: center;
-  animation:rise .12s .08s cubic-bezier(.16, 1, 0.3, 1) both;
-}
-.counter-title{
-  font-size: 11px;
-  color: var(--dim);
-  margin-bottom: 12px;
-  letter-spacing: 0.1em;
-  font-family: "MS Gothic", "Courier New", monospace;
-}
-.counter-title .blink{
-  animation: heisei-blink 1s steps(2, start) infinite;
-}
-@keyframes heisei-blink {
-  to { visibility: hidden; }
-}
-.counter-digits-container{
-  display: inline-flex;
-  align-items: center;
-  gap: 1px;
-  background: #050709;
-  padding: 4px 6px;
-  border-top: 2px solid #26282f;
-  border-left: 2px solid #26282f;
-  border-bottom: 2px solid #8b8a85;
-  border-right: 2px solid #8b8a85;
-  border-radius: 2px;
-}
-.counter-digit{
-  font-family: "Courier New", Courier, monospace;
-  font-size: 20px;
-  font-weight: bold;
-  color: #39ff14; /* Cyber Neon Green */
-  text-shadow: 0 0 5px rgba(57, 255, 20, 0.7);
-  background: #0d1a0d;
-  width: 14px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid #1a331a;
-  user-select: none;
-}
-.counter-digit:last-child{
-  border-right: none;
-}
-/* Retro Badges */
-.retro-badges-container{
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 28px;
-  animation:rise .12s .09s cubic-bezier(.16, 1, 0.3, 1) both;
-}
-.retro-badge{
-  width: 88px;
-  height: 31px;
-  font-family: "MS Gothic", "Courier New", monospace;
-  font-size: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  line-height: 1.1;
-  font-weight: bold;
-  user-select: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-.retro-badge.html5{
-  background: #1c150c;
-  border-top: 2px solid #d4b483;
-  border-left: 2px solid #d4b483;
-  border-bottom: 2px solid #4a3c28;
-  border-right: 2px solid #4a3c28;
-  color: #d4b483;
-}
-.retro-badge.ie6{
-  background: #0f1c30;
-  border-top: 2px solid #00c6ff;
-  border-left: 2px solid #00c6ff;
-  border-bottom: 2px solid #003666;
-  border-right: 2px solid #003666;
-  color: #00c6ff;
-}
-.retro-badge.netscape{
-  background: #0f1c14;
-  border-top: 2px solid #39ff14;
-  border-left: 2px solid #39ff14;
-  border-bottom: 2px solid #0e3d06;
-  border-right: 2px solid #0e3d06;
-  color: #39ff14;
-}
 
 @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
@@ -232,69 +138,11 @@ nav{display:flex;flex-direction:column;gap:2px;}
     <a class="link" href="https://github.com/psyaro" id="link-github">
       <span class="name">GitHub</span><span class="handle">@psyaro</span>
     </a>
+    <a class="link" href="./others/" id="link-others">
+      <span class="name">その他</span><span class="handle"></span>
+    </a>
   </nav>
 
 </main>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const counterDigits = document.getElementById('counter-digits');
-
-  // Helper function to render digits
-  function updateCounterDisplay(count) {
-    const formatted = String(count).padStart(6, '0');
-    counterDigits.innerHTML = '';
-    for (let char of formatted) {
-      const span = document.createElement('span');
-      span.className = 'counter-digit';
-      span.textContent = char;
-      counterDigits.appendChild(span);
-    }
-  }
-
-  // Condition 1: Only count visits on the production host (psyaro.github.io)
-  const isProduction = window.location.hostname === 'psyaro.github.io';
-
-  // If local environment, do not call API to avoid ERR_BLOCKED_BY_CLIENT (Adblockers)
-  // and directly render a mock count so the developer can see it working.
-  if (!isProduction) {
-    const mockCount = 123; // Test value for local preview
-    updateCounterDisplay(mockCount);
-    return;
-  }
-
-  // Condition 2: Prevent incrementing on duplicate visits from the same device within 24 hours
-  const lastVisit = localStorage.getItem('muno_last_visit');
-  const now = Date.now();
-  const ONE_DAY = 24 * 60 * 60 * 1000; // 24 hours in ms
-  const isUnique = !lastVisit || (now - parseInt(lastVisit, 10) > ONE_DAY);
-
-  // Set endpoint: use /up to increment on production for unique visits, otherwise read-only GET
-  let apiEndpoint = 'https://api.counterapi.dev/v2/psyaros-team-4205/first-counter-4205';
-  
-  if (isUnique) {
-    apiEndpoint += '/up';
-    localStorage.setItem('muno_last_visit', String(now));
-  }
-
-  // Asynchronous fetch from CounterAPI
-  fetch(apiEndpoint)
-    .then(res => {
-      if (!res.ok) throw new Error('API error');
-      return res.json();
-    })
-    .then(data => {
-      if (data && typeof data.count === 'number') {
-        updateCounterDisplay(data.count);
-      }
-    })
-    .catch(err => {
-      console.error('Counter fetch error:', err);
-      // Fallback: if adblocker blocks the API on production, show 000000 instead of keeping dashes
-      updateCounterDisplay(0);
-    });
-
-});
-</script>
 </body>
 </html>

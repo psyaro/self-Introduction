@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>その他 | muno</title>
+  <meta name="description" content="munoのその他リンク集。">
+  <meta property="og:title" content="その他 | muno">
+  <meta property="og:description" content="munoのその他リンク集。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nomineko.com/others/">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090f;
+      --surface: #0f1018;
+      --glass: rgba(255, 255, 255, 0.04);
+      --glass-b: rgba(255, 255, 255, 0.10);
+      --ink: #e8e6f0;
+      --dim: #7a788a;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent1: #c8a3f5;
+      --accent2: #7dd3fc;
+      --accent3: #86efac;
+      --grad: linear-gradient(135deg, #7c3aed, #2563eb, #0ea5e9);
+      --grad2: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .18;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    .orb-1 { width: 600px; height: 600px; background: #7c3aed; top: -200px; left: -200px; animation-delay: 0s; }
+    .orb-2 { width: 500px; height: 500px; background: #0ea5e9; bottom: -150px; right: -150px; animation-delay: -6s; }
+    .orb-3 { width: 400px; height: 400px; background: #a855f7; top: 40%; left: 40%; animation-delay: -12s; }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, -30px) scale(1.05); }
+      100% { transform: translate(-20px, 50px) scale(.97); }
+    }
+
+    .page { position: relative; z-index: 1; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(9, 9, 15, .75);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--dim);
+      font-size: 13px;
+      letter-spacing: .06em;
+      text-decoration: none;
+      transition: color .25s;
+    }
+
+    .back-link svg { transition: transform .25s; }
+    .back-link:hover { color: var(--ink); }
+    .back-link:hover svg { transform: translateX(-3px); }
+
+    .header-title {
+      font-size: 13px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--dim);
+      font-weight: 500;
+    }
+
+    .hero {
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--accent1);
+      margin-bottom: 24px;
+      background: rgba(200, 163, 245, .08);
+      border: 1px solid rgba(200, 163, 245, .2);
+      border-radius: 100px;
+      padding: 6px 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 .grad-text {
+      background: var(--grad2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .links-section {
+      padding: 0 24px 80px;
+    }
+
+    .link-card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      transition: box-shadow .4s;
+    }
+
+    .link-card:hover {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .4), 0 0 0 1px rgba(200, 163, 245, .15);
+    }
+
+    .card-accent-bar { height: 3px; background: var(--grad); }
+
+    .link-card-inner {
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .link-card-body {}
+
+    .link-card-label {
+      font-size: 10px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .link-card-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .link-card-desc {
+      font-size: .88rem;
+      color: var(--dim);
+    }
+
+    .link-card-cta {
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 100px;
+      background: var(--grad);
+      color: #fff;
+      font-weight: 700;
+      font-size: .88rem;
+      letter-spacing: .03em;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(124, 58, 237, .4);
+      transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 48px rgba(124, 58, 237, .55);
+    }
+
+    .btn-primary svg { transition: transform .25s; }
+    .btn-primary:hover svg { transform: translateX(3px); }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--dim);
+      letter-spacing: .06em;
+    }
+
+    footer a { color: var(--dim); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--ink); }
+
+    @media(max-width:520px) {
+      .link-card-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * { animation: none !important; transition: none !important; }
+      .link-card { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="page">
+
+    <header>
+      <a class="back-link" href="../">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        muno
+      </a>
+      <span class="header-title">その他</span>
+      <div style="width:60px"></div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-eyebrow">Others</div>
+        <h1><span class="grad-text">その他</span></h1>
+      </div>
+    </section>
+
+    <section class="links-section">
+      <div class="container">
+
+        <article class="link-card">
+          <div class="card-accent-bar"></div>
+          <div class="link-card-inner">
+            <div class="link-card-body">
+              <div class="link-card-label">Anime · Log</div>
+              <div class="link-card-name">アニコレ</div>
+              <div class="link-card-desc">視聴済みアニメの記録</div>
+            </div>
+            <div class="link-card-cta">
+              <a class="btn-primary" href="https://anikore.jp/users/shelf/489647/status:completed/" target="_blank" rel="noopener noreferrer">
+                開く
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <footer>
+      <a href="../">muno</a>
+      &nbsp;·&nbsp;
+      <span>その他</span>
+    </footer>
+
+  </div>
+
+
+</body>
+
+</html>
